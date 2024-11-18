@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { Prompt } from './cli.prompt';
+import { PromptQuestion } from './prompt.js';
 
 @Module({
-	providers: [Prompt],
+	providers: [PromptQuestion],
 })
 export class CliModule {}

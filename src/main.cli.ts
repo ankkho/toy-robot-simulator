@@ -1,8 +1,8 @@
 import { CommandFactory } from 'nest-commander';
-import { AppModule } from './app.module';
+import { AppCliModule } from './app.cli.module';
 
 (async () => {
-	await CommandFactory.run(AppModule, {
+	await CommandFactory.run(AppCliModule, {
 		logger: ['warn', 'error'],
 	});
 })();

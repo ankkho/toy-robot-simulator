@@ -4,7 +4,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { RobotModule } from './robot/robot.module';
 import { CliModule } from './cli/cli.module';
 import configuration from './config/configuration.js';
-import { RobotCommand } from './cli.command';
+import { PromptQuestion } from './cli/prompt.js';
 
 @Module({
 	imports: [
@@ -16,6 +16,6 @@ import { RobotCommand } from './cli.command';
 		RobotModule,
 		CliModule,
 	],
-	providers: [RobotCommand],
+	providers: [PromptQuestion],
 })
-export class AppModule {}
+export class AppCliModule {}
