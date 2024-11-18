@@ -25,9 +25,17 @@
     "reflect-metadata": "^0.1.13"
   },
   "xo": {
+    "prettier": true,
     "ignores": [
-      "!tests/**"
-    ]
+      "test/**/**"
+    ],
+    "rules": {
+      "unicorn/prefer-top-level-await": "off",
+      "@typescript-eslint/no-extraneous-class": "off",
+      "new-cap": "off",
+      "import/extensions": "off",
+      "@typescript-eslint/indent": "off"
+    }
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
@@ -37,6 +45,7 @@
     "@nestjs/testing": "^10.0.0",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
+    "@typescript-eslint/parser": "^7.18.0",
     "globals": "^15.12.0",
     "husky": "^9.1.6",
     "jest": "^29.5.0",
