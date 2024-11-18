@@ -25,6 +25,7 @@
     "inquirer": "^12.1.0",
     "nest-commander": "^3.15.0",
     "nestjs-pino": "^4.1.0",
+    "pino": "^9.5.0",
     "reflect-metadata": "^0.1.13"
   },
   "xo": {

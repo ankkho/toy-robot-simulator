@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { PinoLogger } from 'nestjs-pino';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { RobotService } from '../robot/robot.service';
 import { RobotNotPlacedError } from '../robot/errors/robot.errors';
 import { ValidCommands } from './types.js';
 import { getCoodinatesAndDirectionFromPlaceCommand } from './utils.js';
-import { InvalidCommandError } from './errors';
+import { InvalidCommandError } from './errors.js';
 
 @Injectable()
 export class ProcessCommand {
   constructor(
+    @InjectPinoLogger()
     private readonly logger: PinoLogger,
     private readonly robotService: RobotService,
   ) {}

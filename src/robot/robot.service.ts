@@ -1,37 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Direction, RobotCoordinate } from './types.js';
 import { Robot } from './robot.js';
 
 @Injectable()
-export class RobotService {
-	constructor(private readonly robot: Robot) {}
+export class RobotService implements OnModuleInit {
+  constructor(private readonly robot: Robot) {}
 
-	place(newCoordinates: RobotCoordinate, newDirection: Direction): string {
-		const { x, y, direction } = this.robot.place(newCoordinates, newDirection);
-		return `Robot placed successfully at position X: ${x}, Y: ${y}, Direction: ${direction}`;
-	}
+  public onModuleInit(): void {
+    const defaultCoordinates: RobotCoordinate = { x: 0, y: 0 };
+    this.robot.init(defaultCoordinates, Direction.NORTH);
+  }
 
-	move(): string {
-		return this.robot.move();
-	}
+  place(newCoordinates: RobotCoordinate, newDirection: Direction): string {
+    const { x, y, direction } = this.robot.place(newCoordinates, newDirection);
+    return `Robot placed successfully at position X: ${x}, Y: ${y}, Direction: ${direction}`;
+  }
 
-	turnLeft(): string {
-		return this.robot.turnToLeft();
-	}
+  move(): string {
+    return this.robot.move();
+  }
 
-	turnRight(): string {
-		return this.robot.turnToRight();
-	}
+  turnLeft(): string {
+    return this.robot.turnToLeft();
+  }
 
-	report(): string {
-		return this.robot.getReport();
-	}
+  turnRight(): string {
+    return this.robot.turnToRight();
+  }
 
-	getCoordinates(): RobotCoordinate {
-		return this.robot.getCoodinates();
-	}
+  report(): string {
+    return this.robot.getReport();
+  }
 
-	isPlaced(): boolean {
-		return this.robot.isRobotPlaced();
-	}
+  getCoordinates(): RobotCoordinate {
+    return this.robot.getCoodinates();
+  }
+
+  isPlaced(): boolean {
+    return this.robot.isRobotPlaced();
+  }
 }
