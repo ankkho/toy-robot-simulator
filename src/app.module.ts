@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
-import { RobotCommand } from './basic.command';
 import { RobotModule } from './robot/robot.module';
+import { CliModule } from './cli/cli.module';
 import configuration from './config/configuration.js';
+import { RobotCommand } from './cli.command';
 
 @Module({
 	imports: [
@@ -13,6 +14,7 @@ import configuration from './config/configuration.js';
 			load: [configuration],
 		}),
 		RobotModule,
+		CliModule,
 	],
 	providers: [RobotCommand],
 })
