@@ -7,8 +7,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "lint": "npx xo --fix",
+    "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint:fix": "npx xo --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -27,7 +27,8 @@
   "xo": {
     "prettier": true,
     "ignores": [
-      "test/**/**"
+      "test/**/**",
+      "commitlint.config.js"
     ],
     "rules": {
       "unicorn/prefer-top-level-await": "off",

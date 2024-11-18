@@ -1,11 +1,7 @@
-// Documentation https://github.com/conventional-changelog/commitlint/blob/master/docs/reference-rules.md
-
-const config = {
+module.exports = {
 	extends: ['@commitlint/config-conventional'],
 	rules: {
-		'header-max-length': () => [0, 'always', 72],
+		'header-max-length': () => [0, 'always', 50],
 		'subject-case': () => [0, 'always', 'lower-case'],
 	},
 };
-
-export default config;
