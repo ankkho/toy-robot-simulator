@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
-import { PromptQuestion } from './prompt.js';
+import { RobotModule } from '../robot/robot.module';
+import { PromptCommand } from './prompt.command';
+import { ProcessCommand } from './process.command';
 
 @Module({
-	providers: [PromptQuestion],
+	exports: [ProcessCommand],
+	imports: [RobotModule],
+	providers: [PromptCommand, ProcessCommand],
 })
 export class CliModule {}

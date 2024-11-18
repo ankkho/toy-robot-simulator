@@ -30,4 +30,8 @@ export class RobotService {
 	getCoordinates(): RobotCoordinate {
 		return this.robot.getCoodinates();
 	}
+
+	isPlaced(): boolean {
+		return this.robot.isRobotPlaced();
+	}
 }

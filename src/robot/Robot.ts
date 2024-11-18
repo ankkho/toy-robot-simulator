@@ -1,6 +1,7 @@
 import { type ConfigService } from '@nestjs/config';
 import { type TableConfig, type Config } from 'src/config/configuration';
 import { type PinoLogger } from 'nestjs-pino';
+import { Injectable } from '@nestjs/common';
 import {
 	Direction,
 	directionsForTurnLeft,
@@ -10,13 +11,18 @@ import {
 } from './types.js';
 import { InvalidCoordinatesError } from './errors/table.errors';
 
+@Injectable()
 export class Robot {
+	private isPlaced: boolean;
+	private readonly logger: PinoLogger;
+	private readonly config: ConfigService<Config>;
+
 	constructor(
-		private readonly config: ConfigService<Config>,
-		private readonly logger: PinoLogger,
 		private coordinates: RobotCoordinate,
 		private direction: Direction = Direction.NORTH,
-	) {}
+	) {
+		this.isPlaced = false;
+	}
 
 	place(newCoordinates: RobotCoordinate, newDirection: Direction): NewPositon {
 		this.coordinates = newCoordinates;
@@ -31,11 +37,17 @@ export class Robot {
 			'Robot placed successfully. New Coordinates set.',
 		);
 
+		this.isPlaced = true;
+
 		return {
 			x: this.coordinates.x,
 			y: this.coordinates.y,
 			direction: this.direction,
 		};
+	}
+
+	isRobotPlaced(): boolean {
+		return this.isPlaced;
 	}
 
 	move(): string {
