@@ -3,7 +3,7 @@ import { RobotService } from './robot.service';
 import { Robot } from './robot.js';
 
 @Module({
-  exports: [RobotService],
-  providers: [Robot, RobotService],
+	exports: [RobotService],
+	providers: [Robot, RobotService],
 })
 export class RobotModule {}

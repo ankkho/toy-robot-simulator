@@ -23,6 +23,7 @@
     "@nestjs/core": "^10.0.0",
     "cli-table3": "^0.6.5",
     "inquirer": "^12.1.0",
+    "joi": "^17.13.3",
     "nest-commander": "^3.15.0",
     "nestjs-pino": "^4.1.0",
     "pino": "^9.5.0",
@@ -32,7 +33,8 @@
     "prettier": true,
     "ignores": [
       "test/**/**",
-      "commitlint.config.js"
+      "commitlint.config.js",
+      "src/config/config.schema.ts"
     ],
     "rules": {
       "n/prefer-global/process": "off",
