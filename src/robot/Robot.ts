@@ -68,9 +68,7 @@ export class Robot {
 	}
 
 	getReport(): string {
-		this.logger.info(
-			`REPORT command invoked. X: ${this.coordinates.x}, Y: ${this.coordinates.y}, Direction: ${this.direction}`,
-		);
+		this.logger.info(`REPORT command invoked. X: ${this.coordinates.x}, Y: ${this.coordinates.y}, Direction: ${this.direction}`);
 		return `Current Position of Robot: X: ${this.coordinates.x}, Y: ${this.coordinates.y}, Direction: ${this.direction}`;
 	}
 
