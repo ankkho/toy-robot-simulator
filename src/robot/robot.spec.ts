@@ -1,36 +1,23 @@
 import { createMock } from '@golevelup/ts-jest';
-import { Test, type TestingModule } from '@nestjs/testing';
-import { type ConfigType } from '@nestjs/config';
+import { Test, TestingModule } from '@nestjs/testing';
+import { ConfigType } from '@nestjs/config';
 import { PinoLogger } from 'nestjs-pino';
 import configuration from '../config/configuration.js';
 import { Robot } from './robot.js';
 import { InvalidCoordinatesError } from './errors/table.errors';
-import { Direction, type RobotCoordinate } from './types.js';
+import { Direction, RobotCoordinate } from './types.js';
+import { mockedConfig } from '../../test/test.utils.js';
+import { CliAppModule } from '../cli.app.module.js';
 
 describe('Robot', () => {
   let robot: Robot;
   let mockConfig: ConfigType<typeof configuration>;
-  let mockLogger: PinoLogger;
 
-  beforeEach(async () => {
-    mockConfig = {
-      nodeEnv: 'test',
-      tableConfig: {
-        maxCoordinates: { x: 5, y: 5 },
-      },
-    };
-
-    mockLogger = {
-      info: jest.fn(),
-      error: jest.fn(),
-      warn: jest.fn(),
-      debug: jest.fn(),
-      fatal: jest.fn(),
-      trace: jest.fn(),
-      setContext: jest.fn(),
-    } as unknown as PinoLogger;
+  beforeAll(async () => {
+    mockConfig = mockedConfig;
 
     const module: TestingModule = await Test.createTestingModule({
+      imports: [CliAppModule],
       providers: [
         Robot,
         {
