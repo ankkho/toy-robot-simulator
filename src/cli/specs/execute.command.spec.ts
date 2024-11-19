@@ -1,14 +1,14 @@
 import { Test, type TestingModule } from '@nestjs/testing';
 import { mock, mockReset } from 'jest-mock-extended';
-import { CliAppModule } from '../cli.app.module';
-import { RobotService } from '../robot/robot.service';
-import { RobotNotPlacedError } from '../robot/errors/robot.errors';
-import { ExecuteCommand } from './execute.command';
-import { ValidCommands } from './types.js';
-import { InvalidCommandError } from './errors.js';
-import { getCoodinatesAndDirectionFromPlaceCommand } from './utils.js';
+import { CliAppModule } from '../../cli.app.module';
+import { RobotService } from '../../robot/robot.service';
+import { RobotNotPlacedError } from '../../robot/errors/robot.errors';
+import { ExecuteCommand } from '../execute.command';
+import { ValidCommands } from '../types.js';
+import { InvalidCommandError } from '../errors.js';
+import { getCoodinatesAndDirectionFromPlaceCommand } from '../utils.js';
 
-jest.mock('./utils');
+jest.mock('../utils');
 
 describe('ExecuteCommand', () => {
 	let executeCommand: ExecuteCommand;

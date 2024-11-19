@@ -1,12 +1,12 @@
 import { Test, type TestingModule } from '@nestjs/testing';
 import { type ConfigType } from '@nestjs/config';
 import { mock, mockReset } from 'jest-mock-extended';
-import type configuration from '../config/configuration.js';
-import { mockedConfig } from '../../test/test.utils';
-import { CliAppModule } from '../cli.app.module';
-import { RobotService } from './robot.service';
-import { Robot } from './robot.js';
-import { Direction, type RobotCoordinate } from './types.js';
+import type configuration from '../../config/configuration.js';
+import { mockedConfig } from '../../shared/utils/test.utils';
+import { CliAppModule } from '../../cli.app.module.js';
+import { RobotService } from '../robot.service.js';
+import { Robot } from '../robot.js';
+import { Direction, type RobotCoordinate } from '../types.js';
 
 describe('RobotService', () => {
 	let robotService: RobotService;

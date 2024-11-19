@@ -1,17 +1,12 @@
 import { Test, type TestingModule } from '@nestjs/testing';
 import { mock, mockReset } from 'jest-mock-extended';
-import { PinoLogger } from 'nestjs-pino';
-import { CliAppModule } from '../cli.app.module';
-import { RobotService } from '../robot/robot.service';
-import { RobotNotPlacedError } from '../robot/errors/robot.errors';
-import { Direction } from '../robot/types.js';
-import { ExecuteCommand } from './execute.command';
-import { ValidCommands } from './types.js';
-import { InvalidCommandError } from './errors.js';
-import { getCoodinatesAndDirectionFromPlaceCommand } from './utils.js';
-import { PromptCommand } from './prompt.command';
+import { CliAppModule } from '../../cli.app.module';
+import { Direction } from '../../robot/types.js';
+import { ExecuteCommand } from '../execute.command';
+import { ValidCommands } from '../types.js';
+import { PromptCommand } from '../prompt.command';
 
-jest.mock('./utils');
+jest.mock('../utils');
 
 describe('PromptCommand', () => {
 	let promptCommand: PromptCommand;
