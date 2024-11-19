@@ -1,13 +1,13 @@
 import { createMock } from '@golevelup/ts-jest';
-import { Test, TestingModule } from '@nestjs/testing';
-import { ConfigType } from '@nestjs/config';
+import { Test, type TestingModule } from '@nestjs/testing';
+import { type ConfigType } from '@nestjs/config';
 import { PinoLogger } from 'nestjs-pino';
 import configuration from '../config/configuration.js';
-import { Robot } from './robot.js';
-import { InvalidCoordinatesError } from './errors/table.errors';
-import { Direction, RobotCoordinate } from './types.js';
 import { mockedConfig } from '../../test/test.utils.js';
 import { CliAppModule } from '../cli.app.module.js';
+import { Robot } from './robot.js';
+import { InvalidCoordinatesError } from './errors/table.errors';
+import { Direction, type RobotCoordinate } from './types.js';
 
 describe('Robot', () => {
   let robot: Robot;

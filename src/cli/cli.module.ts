@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { PinoLogger } from 'nestjs-pino';
 import { RobotModule } from '../robot/robot.module';
 import { PromptCommand } from './prompt.command';
-import { ProcessCommand } from './process.command';
+import { ExecuteCommand } from './execute.command';
 
 @Module({
-	exports: [ProcessCommand],
-	imports: [RobotModule],
-	providers: [PromptCommand, ProcessCommand],
+  exports: [ExecuteCommand],
+  imports: [RobotModule],
+  providers: [PromptCommand, ExecuteCommand],
 })
 export class CliModule {}
