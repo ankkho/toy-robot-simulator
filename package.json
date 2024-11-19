@@ -12,9 +12,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "start:cli": "npm run build && node ./dist/main.cli.js",
-    "prepare": "husky"
+    "start:cli": "npm run build && node ./dist/main.cli.js"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -28,6 +26,9 @@
     "nestjs-pino": "^4.1.0",
     "pino": "^9.5.0",
     "reflect-metadata": "^0.2.2"
+  },
+  "engines": {
+    "node": ">=22.11.0"
   },
   "xo": {
     "prettier": true,

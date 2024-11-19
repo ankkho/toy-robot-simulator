@@ -16,6 +16,7 @@ import schema from './config/config.schema';
 					dest: './logs/app.log',
 					minLength: 4096,
 					sync: false,
+					mkdir: true,
 				}),
 			},
 		}),

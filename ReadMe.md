@@ -49,6 +49,17 @@ npm run test
 
 This will execute the tests and show the results in the terminal.
 
+## Docker 
+
+To build and run the application with Docker, use the following command
+
+```bash
+npm run build
+docker build -t toy-robot .
+docker run --rm -it toy-robot
+```
+
+
 ## How to update the table dimensions?
 
 You can update the below coordinates in `.env` file. Restart the app after updating your configuration.

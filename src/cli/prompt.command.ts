@@ -52,7 +52,7 @@ export class PromptCommand extends CommandRunner {
 		const normalizedCommand = answers.command.toUpperCase();
 		this.executeCommand.execute(normalizedCommand);
 
-		console.log('\n Continue.. \n');
+		console.log('\n ----------- \n');
 		await this.run();
 	}
 
@@ -80,8 +80,9 @@ export class PromptCommand extends CommandRunner {
 				this.logger.error(message, { name, stack });
 				console.error(`\n Error: ${message}`);
 			} else {
-				this.logger.error('An unknown error occurred.');
-				console.error("\n 'An unknown error occurred.");
+				const message = 'Unexpected Error';
+				this.logger.error(message, error);
+				console.error(`\n Error: ${message}`);
 			}
 
 			return false;

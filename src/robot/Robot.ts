@@ -3,7 +3,7 @@ import { PinoLogger } from 'nestjs-pino';
 import { Inject, Injectable } from '@nestjs/common';
 import configuration from '../config/configuration.js';
 import { Direction, directionsForTurnLeft, directionsForTurnRight, NewPositon, RobotCoordinate } from './types.js';
-import { InvalidCoordinatesError } from './errors/table.errors';
+import { InvalidCoordinatesError } from './errors/table.errors.js';
 
 /**
  * Represents a robot with placement, movement, and direction functionality.
@@ -169,7 +169,7 @@ export class Robot {
 	 */
 	private validateCoordinates(coordinates: RobotCoordinate): void {
 		const { x, y } = coordinates;
-		const tableConfig = this.config.tableConfig;
+		const { tableConfig } = this.config;
 
 		const xCoordinatesForTable = tableConfig?.maxCoordinates.x;
 		const yCoordinatesForTable = tableConfig?.maxCoordinates.y;
