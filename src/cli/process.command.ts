@@ -8,65 +8,64 @@ import { InvalidCommandError } from './errors.js';
 
 @Injectable()
 export class ProcessCommand {
-	constructor(
-		@InjectPinoLogger()
-		private readonly logger: PinoLogger,
-		private readonly robotService: RobotService,
-	) {}
+  constructor(
+    private readonly logger: PinoLogger,
+    private readonly robotService: RobotService,
+  ) {}
 
-	otherCommands(command: ValidCommands): void {
-		if (!this.robotService.isPlaced()) {
-			throw new RobotNotPlacedError();
-		}
+  otherCommands(command: ValidCommands): void {
+    if (!this.robotService.isPlaced()) {
+      throw new RobotNotPlacedError();
+    }
 
-		switch (command) {
-			case ValidCommands.LEFT: {
-				console.log(this.robotService.turnLeft());
-				break;
-			}
+    switch (command) {
+      case ValidCommands.LEFT: {
+        console.log(this.robotService.turnLeft());
+        break;
+      }
 
-			case ValidCommands.RIGHT: {
-				console.log(this.robotService.turnRight());
-				break;
-			}
+      case ValidCommands.RIGHT: {
+        console.log(this.robotService.turnRight());
+        break;
+      }
 
-			case ValidCommands.REPORT: {
-				console.log(this.robotService.report());
-				break;
-			}
+      case ValidCommands.REPORT: {
+        console.log(this.robotService.report());
+        break;
+      }
 
-			case ValidCommands.MOVE: {
-				console.log(this.robotService.move());
-				break;
-			}
+      case ValidCommands.MOVE: {
+        console.log(this.robotService.move());
+        break;
+      }
 
-			default: {
-				throw new InvalidCommandError(command);
-			}
-		}
-	}
+      default: {
+        throw new InvalidCommandError(command);
+      }
+    }
+  }
 
-	process(command: string): void {
-		try {
-			if (command.startsWith(ValidCommands.PLACE)) {
-				const { coordinates, direction } = getCoodinatesAndDirectionFromPlaceCommand(command);
-				const response = this.robotService.place(coordinates, direction);
-				console.log(response);
-			} else {
-				const normalizedCommand = command.toUpperCase();
-				this.otherCommands(normalizedCommand as ValidCommands);
-			}
-		} catch (error) {
-			if (error instanceof Error) {
-				const { message, name, stack } = error;
-				this.logger.error(message, { name, stack });
+  process(command: string): void {
+    try {
+      if (command.startsWith(ValidCommands.PLACE)) {
+        const { coordinates, direction } = getCoodinatesAndDirectionFromPlaceCommand(command);
+        const response = this.robotService.place(coordinates, direction);
+        console.log(response);
+      } else {
+        const normalizedCommand = command.toUpperCase();
+        this.otherCommands(normalizedCommand as ValidCommands);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        const { message, name, stack } = error;
+        this.logger.error(message, { name, stack });
 
-				console.error(`\n Error: ${message}`);
-			} else {
-				this.logger.error('An unknown error occurred.');
+        console.error(`\n Error: ${message}`);
+      } else {
+        this.logger.error('An unknown error occurred.');
 
-				console.error("\n 'An unknown error occurred.");
-			}
-		}
-	}
+        console.error("\n 'An unknown error occurred.");
+      }
+    }
+  }
 }

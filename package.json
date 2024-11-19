@@ -7,14 +7,14 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format:fix": "prettier --write \"src/**/*.ts\" \"**/*.(t|j)s\"",
     "lint:fix": "npx xo --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "start:cli": "npm run build && node ./dist/main.cli.js",
+    "start:cli": "npm run build && node ./dist/src/main.cli.js",
     "prepare": "husky"
   },
   "dependencies": {
@@ -27,27 +27,34 @@
     "nest-commander": "^3.15.0",
     "nestjs-pino": "^4.1.0",
     "pino": "^9.5.0",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.2.2"
   },
   "xo": {
     "prettier": true,
     "ignores": [
-      "test/**/**",
+      ".*\\.spec\\.ts$",
       "commitlint.config.js",
       "src/config/config.schema.ts"
     ],
+    "extends": [
+      "plugin:import/recommended",
+      "plugin:import/typescript"
+    ],
     "rules": {
+      "typescript/explicit-module-boundary-types": "off",
       "n/prefer-global/process": "off",
       "unicorn/prefer-top-level-await": "off",
       "@typescript-eslint/no-extraneous-class": "off",
       "new-cap": "off",
       "import/extensions": "off",
+      "import/no-unresolved": "off",
       "@typescript-eslint/indent": "off"
     }
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
+    "@golevelup/ts-jest": "^0.6.1",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
@@ -72,6 +79,9 @@
       "json",
       "ts"
     ],
+    "moduleNameMapper": {
+      "^(.*)\\.js$": "$1"
+    },
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
