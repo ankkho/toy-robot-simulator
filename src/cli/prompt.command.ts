@@ -1,13 +1,15 @@
 import inquirer from 'inquirer';
 import { PinoLogger } from 'nestjs-pino';
 import { Command, CommandRunner } from 'nest-commander';
-import { CommandAnswer, ValidCommands } from './types.js';
-import { commandAndDescriptions, isValidCommand, placeCommandRegEx } from './utils.js';
-import { InvalidCommandError, InvalidPlaceCommandError } from './errors.js';
-import { ExecuteCommand } from './execute.command.js';
+import { CommandAnswer, ValidCommands } from './types';
+import { commandAndDescriptions } from './utils';
+import { InvalidCommandError, InvalidPlaceCommandError } from './errors';
+import { ExecuteCommand } from './execute.command';
 
 @Command({ name: 'start', description: 'Start the toy robot simulator!' })
 export class PromptCommand extends CommandRunner {
+  placeCommandRegEx = /^place\s+[0-5],[0-5],(north|south|east|west)$/i;
+
   constructor(
     private readonly logger: PinoLogger,
     private readonly executeCommand: ExecuteCommand,
@@ -35,16 +37,18 @@ export class PromptCommand extends CommandRunner {
     await this.run();
   }
 
-  private validate(input: string): boolean {
+  validate(input: string): boolean {
     try {
       const normalizedCommand = input.toUpperCase();
 
-      if (!isValidCommand(normalizedCommand) && !normalizedCommand.startsWith(ValidCommands.PLACE)) {
-        throw new InvalidCommandError(input);
-      }
-
-      if (normalizedCommand.startsWith(ValidCommands.PLACE) && !placeCommandRegEx.test(normalizedCommand)) {
-        throw new InvalidPlaceCommandError();
+      if (normalizedCommand.startsWith(ValidCommands.PLACE)) {
+        if (!this.placeCommandRegEx.test(normalizedCommand)) {
+          throw new InvalidPlaceCommandError();
+        }
+      } else {
+        if (!Object.values(ValidCommands).includes(normalizedCommand.trim() as ValidCommands)) {
+          throw new InvalidCommandError(normalizedCommand);
+        }
       }
 
       return true;

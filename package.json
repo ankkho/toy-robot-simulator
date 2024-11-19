@@ -12,9 +12,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "start:cli": "npm run build && node ./dist/src/main.cli.js",
+    "start:cli": "npm run build && node ./dist/main.cli.js",
     "prepare": "husky"
   },
   "dependencies": {
@@ -55,6 +54,7 @@
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@golevelup/ts-jest": "^0.6.1",
+    "@inquirer/testing": "^2.1.37",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",

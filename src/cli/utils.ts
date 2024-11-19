@@ -1,10 +1,5 @@
 import { type Direction, type RobotCoordinate } from 'src/robot/types';
-import { type CommandAndDescription, type DirectionAndCoordinates, ValidCommands } from './types.js';
-
-export const isValidCommand = (command: string): boolean =>
-  Object.values(ValidCommands).includes(command as ValidCommands);
-
-export const placeCommandRegEx = /^place\s+[0-5],[0-5],(north|south|east|west)$/i;
+import { type CommandAndDescription, type DirectionAndCoordinates, ValidCommands } from './types';
 
 export const getCoodinatesAndDirectionFromPlaceCommand = (placeCommand: string): DirectionAndCoordinates => {
   const coordinateAndDirection = placeCommand.replace(/^PLACE\s*/, '');
@@ -24,8 +19,7 @@ export const getCoodinatesAndDirectionFromPlaceCommand = (placeCommand: string):
 export const commandAndDescriptions: CommandAndDescription[] = [
   {
     command: 'PLACE',
-    description:
-      'Places the robot on the table. Provide x and y coordinates (range 0-5), along with a direction. Eg: PLACE 1,3,NORTH',
+    description: 'Places the robot on the table. Provide x and y coordinates (range 0-5), along with a direction. Eg: PLACE 1,3,NORTH',
   },
   {
     command: 'MOVE',

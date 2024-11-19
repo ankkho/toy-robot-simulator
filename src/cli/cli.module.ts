@@ -5,8 +5,8 @@ import { PromptCommand } from './prompt.command';
 import { ExecuteCommand } from './execute.command';
 
 @Module({
-  exports: [ExecuteCommand],
-  imports: [RobotModule],
-  providers: [PromptCommand, ExecuteCommand],
+	exports: [ExecuteCommand],
+	imports: [RobotModule],
+	providers: [PromptCommand, ExecuteCommand],
 })
 export class CliModule {}

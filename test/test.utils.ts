@@ -1,6 +1,6 @@
 export const mockedConfig = {
-  nodeEnv: 'test',
-  tableConfig: {
-    maxCoordinates: { x: 5, y: 5 },
-  },
+	nodeEnv: 'test',
+	tableConfig: {
+		maxCoordinates: { x: 5, y: 5 },
+	},
 };

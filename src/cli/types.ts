@@ -6,7 +6,6 @@ export enum ValidCommands {
   PLACE = 'PLACE',
   LEFT = 'LEFT',
   RIGHT = 'RIGHT',
-  EXIT = 'EXIT',
 }
 
 export type DirectionAndCoordinates = {

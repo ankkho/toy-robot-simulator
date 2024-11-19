@@ -11,123 +11,123 @@ import { getCoodinatesAndDirectionFromPlaceCommand } from './utils.js';
 jest.mock('./utils');
 
 describe('ExecuteCommand', () => {
-  let executeCommand: ExecuteCommand;
-  const mockRobotService = mock<RobotService>();
+	let executeCommand: ExecuteCommand;
+	const mockRobotService = mock<RobotService>();
 
-  beforeAll(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      imports: [CliAppModule],
-    })
-      .overrideProvider(RobotService)
-      .useValue(mockRobotService)
-      .compile();
+	beforeAll(async () => {
+		const module: TestingModule = await Test.createTestingModule({
+			imports: [CliAppModule],
+		})
+			.overrideProvider(RobotService)
+			.useValue(mockRobotService)
+			.compile();
 
-    executeCommand = module.get<ExecuteCommand>(ExecuteCommand);
-  });
+		executeCommand = module.get<ExecuteCommand>(ExecuteCommand);
+	});
 
-  beforeEach(() => {
-    mockReset(mockRobotService);
-  });
+	beforeEach(() => {
+		mockReset(mockRobotService);
+	});
 
-  it('should be defined', () => {
-    expect(executeCommand).toBeDefined();
-  });
+	it('should be defined', () => {
+		expect(executeCommand).toBeDefined();
+	});
 
-  describe('execute', () => {
-    it('should execute PLACE command correctly', () => {
-      const command = 'PLACE 1,2,NORTH';
-      const mockCoordinates = { x: 1, y: 2 };
-      const mockDirection = 'NORTH';
+	describe('execute', () => {
+		it('should execute PLACE command correctly', () => {
+			const command = 'PLACE 1,2,NORTH';
+			const mockCoordinates = { x: 1, y: 2 };
+			const mockDirection = 'NORTH';
 
-      (getCoodinatesAndDirectionFromPlaceCommand as jest.Mock).mockReturnValue({
-        coordinates: mockCoordinates,
-        direction: mockDirection,
-      });
+			(getCoodinatesAndDirectionFromPlaceCommand as jest.Mock).mockReturnValue({
+				coordinates: mockCoordinates,
+				direction: mockDirection,
+			});
 
-      mockRobotService.place.mockReturnValue('Placed successfully at 1,2,NORTH');
-      executeCommand.execute(command);
+			mockRobotService.place.mockReturnValue('Placed successfully at 1,2,NORTH');
+			executeCommand.execute(command);
 
-      expect(getCoodinatesAndDirectionFromPlaceCommand).toHaveBeenCalledWith(command);
-      expect(mockRobotService.place).toHaveBeenCalledWith(mockCoordinates, mockDirection);
-    });
+			expect(getCoodinatesAndDirectionFromPlaceCommand).toHaveBeenCalledWith(command);
+			expect(mockRobotService.place).toHaveBeenCalledWith(mockCoordinates, mockDirection);
+		});
 
-    it('should execute other commands correctly when robot is placed', () => {
-      mockRobotService.isPlaced.mockReturnValue(true);
-      mockRobotService.move.mockReturnValue('Moved successfully');
+		it('should execute other commands correctly when robot is placed', () => {
+			mockRobotService.isPlaced.mockReturnValue(true);
+			mockRobotService.move.mockReturnValue('Moved successfully');
 
-      executeCommand.execute('MOVE');
+			executeCommand.execute('MOVE');
 
-      expect(mockRobotService.isPlaced).toHaveBeenCalled();
-      expect(mockRobotService.move).toHaveBeenCalled();
-    });
+			expect(mockRobotService.isPlaced).toHaveBeenCalled();
+			expect(mockRobotService.move).toHaveBeenCalled();
+		});
 
-    it('should log and console.error when RobotNotPlacedError is thrown', () => {
-      const command = 'MOVE';
+		it('should log and console.error when RobotNotPlacedError is thrown', () => {
+			const command = 'MOVE';
 
-      mockRobotService.isPlaced.mockReturnValue(false);
-      expect(() => {
-        executeCommand.otherCommands(ValidCommands.MOVE);
-      }).toThrow(RobotNotPlacedError);
-    });
+			mockRobotService.isPlaced.mockReturnValue(false);
+			expect(() => {
+				executeCommand.otherCommands(ValidCommands.MOVE);
+			}).toThrow(RobotNotPlacedError);
+		});
 
-    it('should log and execute generic errors', () => {
-      const command = 'PLACE 1,2,NORTH';
-      const error = new Error('Unexpected error');
+		it('should log and execute generic errors', () => {
+			const command = 'PLACE 1,2,NORTH';
+			const error = new Error('Unexpected error');
 
-      (getCoodinatesAndDirectionFromPlaceCommand as jest.Mock).mockImplementation(() => {
-        throw error;
-      });
+			(getCoodinatesAndDirectionFromPlaceCommand as jest.Mock).mockImplementation(() => {
+				throw error;
+			});
 
-      executeCommand.execute(command);
-    });
-  });
+			executeCommand.execute(command);
+		});
+	});
 
-  describe('otherCommands', () => {
-    it('should execute LEFT command', () => {
-      mockRobotService.isPlaced.mockReturnValue(true);
-      mockRobotService.turnLeft.mockReturnValue('Turned left');
+	describe('otherCommands', () => {
+		it('should execute LEFT command', () => {
+			mockRobotService.isPlaced.mockReturnValue(true);
+			mockRobotService.turnLeft.mockReturnValue('Turned left');
 
-      executeCommand.otherCommands(ValidCommands.LEFT);
+			executeCommand.otherCommands(ValidCommands.LEFT);
 
-      expect(mockRobotService.isPlaced).toHaveBeenCalled();
-      expect(mockRobotService.turnLeft).toHaveBeenCalled();
-    });
+			expect(mockRobotService.isPlaced).toHaveBeenCalled();
+			expect(mockRobotService.turnLeft).toHaveBeenCalled();
+		});
 
-    it('should execute RIGHT command', () => {
-      mockRobotService.isPlaced.mockReturnValue(true);
-      mockRobotService.turnRight.mockReturnValue('Turned right');
+		it('should execute RIGHT command', () => {
+			mockRobotService.isPlaced.mockReturnValue(true);
+			mockRobotService.turnRight.mockReturnValue('Turned right');
 
-      executeCommand.otherCommands(ValidCommands.RIGHT);
+			executeCommand.otherCommands(ValidCommands.RIGHT);
 
-      expect(mockRobotService.isPlaced).toHaveBeenCalled();
-      expect(mockRobotService.turnRight).toHaveBeenCalled();
-    });
+			expect(mockRobotService.isPlaced).toHaveBeenCalled();
+			expect(mockRobotService.turnRight).toHaveBeenCalled();
+		});
 
-    it('should execute REPORT command', () => {
-      mockRobotService.isPlaced.mockReturnValue(true);
-      mockRobotService.report.mockReturnValue('Robot report');
+		it('should execute REPORT command', () => {
+			mockRobotService.isPlaced.mockReturnValue(true);
+			mockRobotService.report.mockReturnValue('Robot report');
 
-      executeCommand.otherCommands(ValidCommands.REPORT);
+			executeCommand.otherCommands(ValidCommands.REPORT);
 
-      expect(mockRobotService.isPlaced).toHaveBeenCalled();
-      expect(mockRobotService.report).toHaveBeenCalled();
-    });
+			expect(mockRobotService.isPlaced).toHaveBeenCalled();
+			expect(mockRobotService.report).toHaveBeenCalled();
+		});
 
-    it('should execute MOVE command', () => {
-      mockRobotService.isPlaced.mockReturnValue(true);
-      mockRobotService.move.mockReturnValue('Moved successfully');
+		it('should execute MOVE command', () => {
+			mockRobotService.isPlaced.mockReturnValue(true);
+			mockRobotService.move.mockReturnValue('Moved successfully');
 
-      executeCommand.otherCommands(ValidCommands.MOVE);
+			executeCommand.otherCommands(ValidCommands.MOVE);
 
-      expect(mockRobotService.isPlaced).toHaveBeenCalled();
-      expect(mockRobotService.move).toHaveBeenCalled();
-    });
+			expect(mockRobotService.isPlaced).toHaveBeenCalled();
+			expect(mockRobotService.move).toHaveBeenCalled();
+		});
 
-    it('should throw InvalidCommandError for unknown commands', () => {
-      mockRobotService.isPlaced.mockReturnValue(true);
-      const invalidCommand = 'TEST' as ValidCommands;
+		it('should throw InvalidCommandError for unknown commands', () => {
+			mockRobotService.isPlaced.mockReturnValue(true);
+			const invalidCommand = 'TEST' as ValidCommands;
 
-      expect(() => executeCommand.otherCommands(invalidCommand)).toThrow(InvalidCommandError);
-    });
-  });
+			expect(() => executeCommand.otherCommands(invalidCommand)).toThrow(InvalidCommandError);
+		});
+	});
 });

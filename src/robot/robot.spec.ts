@@ -10,116 +10,116 @@ import { InvalidCoordinatesError } from './errors/table.errors';
 import { Direction, type RobotCoordinate } from './types.js';
 
 describe('Robot', () => {
-  let robot: Robot;
-  let mockConfig: ConfigType<typeof configuration>;
+	let robot: Robot;
+	let mockConfig: ConfigType<typeof configuration>;
 
-  beforeAll(async () => {
-    mockConfig = mockedConfig;
+	beforeAll(async () => {
+		mockConfig = mockedConfig;
 
-    const module: TestingModule = await Test.createTestingModule({
-      imports: [CliAppModule],
-      providers: [
-        Robot,
-        {
-          provide: configuration.KEY,
-          useValue: mockConfig,
-        },
-        {
-          provide: PinoLogger,
-          useValue: createMock<PinoLogger>(),
-        },
-      ],
-    }).compile();
+		const module: TestingModule = await Test.createTestingModule({
+			imports: [CliAppModule],
+			providers: [
+				Robot,
+				{
+					provide: configuration.KEY,
+					useValue: mockConfig,
+				},
+				{
+					provide: PinoLogger,
+					useValue: createMock<PinoLogger>(),
+				},
+			],
+		}).compile();
 
-    robot = module.get<Robot>(Robot);
-  });
+		robot = module.get<Robot>(Robot);
+	});
 
-  it('should be defined', () => {
-    expect(robot).toBeDefined();
-  });
+	it('should be defined', () => {
+		expect(robot).toBeDefined();
+	});
 
-  describe('init()', () => {
-    it('should initialize coordinates and direction', () => {
-      const coordinates: RobotCoordinate = { x: 0, y: 0 };
-      const direction: Direction = Direction.NORTH;
+	describe('init()', () => {
+		it('should initialize coordinates and direction', () => {
+			const coordinates: RobotCoordinate = { x: 0, y: 0 };
+			const direction: Direction = Direction.NORTH;
 
-      robot.init(coordinates, direction);
+			robot.init(coordinates, direction);
 
-      expect(robot.getCoodinates()).toEqual(coordinates);
-      expect(robot.isRobotPlaced()).toBeFalsy();
-    });
-  });
+			expect(robot.getCoodinates()).toEqual(coordinates);
+			expect(robot.isRobotPlaced()).toBeFalsy();
+		});
+	});
 
-  describe('place()', () => {
-    it('should place robot with new coordinates and direction', () => {
-      const coordinates: RobotCoordinate = { x: 1, y: 2 };
-      const direction: Direction = Direction.EAST;
+	describe('place()', () => {
+		it('should place robot with new coordinates and direction', () => {
+			const coordinates: RobotCoordinate = { x: 1, y: 2 };
+			const direction: Direction = Direction.EAST;
 
-      const result = robot.place(coordinates, direction);
+			const result = robot.place(coordinates, direction);
 
-      expect(result).toEqual({
-        x: coordinates.x,
-        y: coordinates.y,
-        direction,
-      });
-      expect(robot.isRobotPlaced()).toBeTruthy();
-      expect(result).toEqual({
-        x: 1,
-        y: 2,
-        direction: Direction.EAST,
-      });
-    });
-  });
+			expect(result).toEqual({
+				x: coordinates.x,
+				y: coordinates.y,
+				direction,
+			});
+			expect(robot.isRobotPlaced()).toBeTruthy();
+			expect(result).toEqual({
+				x: 1,
+				y: 2,
+				direction: Direction.EAST,
+			});
+		});
+	});
 
-  describe('move()', () => {
-    it('should move robot to new coordinates based on direction', () => {
-      robot.place({ x: 2, y: 2 }, Direction.NORTH);
+	describe('move()', () => {
+		it('should move robot to new coordinates based on direction', () => {
+			robot.place({ x: 2, y: 2 }, Direction.NORTH);
 
-      const moveResult = robot.move();
+			const moveResult = robot.move();
 
-      expect(moveResult).toContain('Robot successfully moved');
-      expect(robot.getCoodinates()).toEqual({ x: 2, y: 3 });
-    });
+			expect(moveResult).toContain('Robot successfully moved');
+			expect(robot.getCoodinates()).toEqual({ x: 2, y: 3 });
+		});
 
-    it('should throw InvalidCoordinatesError when out of bounds', () => {
-      robot.place({ x: 5, y: 5 }, Direction.NORTH);
+		it('should throw InvalidCoordinatesError when out of bounds', () => {
+			robot.place({ x: 5, y: 5 }, Direction.NORTH);
 
-      expect(() => robot.move()).toThrow(InvalidCoordinatesError);
-    });
-  });
+			expect(() => robot.move()).toThrow(InvalidCoordinatesError);
+		});
+	});
 
-  describe('turnToLeft()', () => {
-    it('should turn robot left and change direction', () => {
-      robot.place({ x: 1, y: 1 }, Direction.NORTH);
+	describe('turnToLeft()', () => {
+		it('should turn robot left and change direction', () => {
+			robot.place({ x: 1, y: 1 }, Direction.NORTH);
 
-      const result = robot.turnToLeft();
+			const result = robot.turnToLeft();
 
-      expect(result).toContain('Robot successfully turned left');
-      expect(robot.getCoodinates()).toEqual({ x: 1, y: 1 });
-      expect(result).toEqual('Robot successfully turned left. New direction: WEST');
-    });
-  });
+			expect(result).toContain('Robot successfully turned left');
+			expect(robot.getCoodinates()).toEqual({ x: 1, y: 1 });
+			expect(result).toEqual('Robot successfully turned left. New direction: WEST');
+		});
+	});
 
-  describe('turnToRight()', () => {
-    it('should turn robot right and change direction', () => {
-      robot.place({ x: 1, y: 1 }, Direction.NORTH);
+	describe('turnToRight()', () => {
+		it('should turn robot right and change direction', () => {
+			robot.place({ x: 1, y: 1 }, Direction.NORTH);
 
-      const result = robot.turnToRight();
+			const result = robot.turnToRight();
 
-      expect(result).toContain('Robot successfully turned right');
-      expect(robot.getCoodinates()).toEqual({ x: 1, y: 1 });
-      expect(result).toEqual('Robot successfully turned right. New direction: EAST');
-    });
-  });
+			expect(result).toContain('Robot successfully turned right');
+			expect(robot.getCoodinates()).toEqual({ x: 1, y: 1 });
+			expect(result).toEqual('Robot successfully turned right. New direction: EAST');
+		});
+	});
 
-  describe('getReport()', () => {
-    it('should return a report of the current position', () => {
-      robot.place({ x: 1, y: 2 }, Direction.SOUTH);
+	describe('getReport()', () => {
+		it('should return a report of the current position', () => {
+			robot.place({ x: 1, y: 2 }, Direction.SOUTH);
 
-      const result = robot.getReport();
+			const result = robot.getReport();
 
-      expect(result).toBe('Current Position of Robot: X: 1, Y: 2, Direction: SOUTH');
-      expect(result).toEqual('Current Position of Robot: X: 1, Y: 2, Direction: SOUTH');
-    });
-  });
+			expect(result).toBe('Current Position of Robot: X: 1, Y: 2, Direction: SOUTH');
+			expect(result).toEqual('Current Position of Robot: X: 1, Y: 2, Direction: SOUTH');
+		});
+	});
 });

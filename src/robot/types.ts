@@ -1,33 +1,33 @@
 export enum Direction {
-  NORTH = 'NORTH',
-  EAST = 'EAST',
-  SOUTH = 'SOUTH',
-  WEST = 'WEST',
+	NORTH = 'NORTH',
+	EAST = 'EAST',
+	SOUTH = 'SOUTH',
+	WEST = 'WEST',
 }
 
 export type RobotCoordinate = {
-  x: number;
-  y: number;
+	x: number;
+	y: number;
 };
 
 // We move anitclockwise from north to west
 export const directionsForTurnLeft: { [key in Direction]: Direction } = {
-  [Direction.NORTH]: Direction.WEST,
-  [Direction.WEST]: Direction.SOUTH,
-  [Direction.SOUTH]: Direction.EAST,
-  [Direction.EAST]: Direction.NORTH,
+	[Direction.NORTH]: Direction.WEST,
+	[Direction.WEST]: Direction.SOUTH,
+	[Direction.SOUTH]: Direction.EAST,
+	[Direction.EAST]: Direction.NORTH,
 };
 
 // We move clockwise from north to east
 export const directionsForTurnRight: { [key in Direction]: Direction } = {
-  [Direction.NORTH]: Direction.EAST,
-  [Direction.EAST]: Direction.SOUTH,
-  [Direction.SOUTH]: Direction.WEST,
-  [Direction.WEST]: Direction.NORTH,
+	[Direction.NORTH]: Direction.EAST,
+	[Direction.EAST]: Direction.SOUTH,
+	[Direction.SOUTH]: Direction.WEST,
+	[Direction.WEST]: Direction.NORTH,
 };
 
 export type NewPositon = {
-  x: number;
-  y: number;
-  direction: Direction;
+	x: number;
+	y: number;
+	direction: Direction;
 };
