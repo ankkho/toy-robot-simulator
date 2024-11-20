@@ -49,7 +49,7 @@ npm run test
 
 This will execute the tests and show the results in the terminal.
 
-## Docker 
+## Docker
 
 To build and run the application with Docker, use the following command
 
@@ -58,7 +58,6 @@ npm run build
 docker build -t toy-robot .
 docker run --rm -it toy-robot
 ```
-
 
 ## How to update the table dimensions?
 
@@ -71,4 +70,8 @@ TABLE_MAX_Y_COORDINATE=5
 
 ## Documentation
 
-For detailed documentation, visit [Docs](docs/index.html).
+```bash
+npm run docs
+```
+
+For detailed documentation, run the above command and visit [Docs](docs/index.html).

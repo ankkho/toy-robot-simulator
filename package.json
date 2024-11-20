@@ -12,7 +12,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "start:cli": "npm run build && node ./dist/main.cli.js"
+    "start:cli": "npm run build && node ./dist/main.cli.js",
+    "docs": "npx typedoc src/**/*.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
